@@ -2,6 +2,7 @@ import streamlit as st
 import pandas
 import requests
 st.set_page_config(layout="wide")
+col1 = st.columns(1)
 
 api_key = "api_key=EEAf1Fdl3yzfxULiCOvFo5N2WjFbdNsFaz2WiR0P"
 url = f"https://api.nasa.gov/planetary/apod?{api_key}"
@@ -13,11 +14,15 @@ request = requests.get(url)
 content = request.json()
 
 print(content)
-image_file = content['hdurl']
+image_title = content['title']
+image_url = content['hdurl']
 image_text = content['explanation']
-print(image_file)
-print(image_text)
-response = requests.get(image_file)
-with open("image.jpg", "wb") as file:
+
+response = requests.get(image_url)
+image_file = "image.jpg"
+with open(image_file , "wb") as file:
     file.write(response.content)
 
+st.title(image_title)
+st.image(image_file)
+st.write(image_text)

@@ -14,7 +14,10 @@ content = request.json()
 
 print(content)
 image_file = content['hdurl']
+image_text = content['explanation']
 print(image_file)
+print(image_text)
 response = requests.get(image_file)
 with open("image.jpg", "wb") as file:
     file.write(response.content)
+
